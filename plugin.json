@@ -1,0 +1,18 @@
+{
+  "id": "com.oficial.acode.groq",
+  "name": "Groq AI Copilot",
+  "main": "main.js",
+  "version": "2.0.1",
+  "readme": "readme.md",
+  "icon": "icon.png",
+  "files": [],
+  "license": "MIT",
+  "repository": "https://github.com/Dev-Benicio/Groq-Acode-Plugin",
+  "keywords": ["ai", "copilot", "autocomplete", "groq", "python"],
+  "author": {
+    "name": "Benício Santos",
+    "role": "Creator",
+    "github": "Dev-Benicio"
+  },
+  "description": "Autocomplete Inteligente via Termux (Groq Llama 3)."
+}
