@@ -40,7 +40,7 @@ Um plugin **não oficial** que adiciona **autocompletar com IA** ao Acode no And
 
 ## 🚀 Instalação Rápida
 
-> 📄 Para o passo a passo completo, consulte o arquivo **[INSTALL.md](INSTALL.md)**
+> 📄 Para o passo a passo completo, consulte o arquivo **[INSTALL.md](https://github.com/Dev-Benicio/Groq-Acode-Plugin/blob/main/INSTALL.md)**
 
 ### Resumo
 1. Configure o servidor no **Termux**
