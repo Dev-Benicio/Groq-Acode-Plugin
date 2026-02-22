@@ -35,98 +35,24 @@ Link Para [**Download**](https://f-droid.org/packages/com.termux/)
 
 Abra o Termux e execute os comandos abaixo.
 
-```
-# Atualizar os pacotes
-pkg update && pkg upgrade -y
+---
 
-#Instalar dependências necessárias
-pkg install python rust binutils -y
+3️⃣ Baixar e Configurar o Servidor Python
 
-# Atualizar o pip (recomendado)
-pip install --upgrade pip
+Como o Termux é um ambiente protegido, vamos baixar o servidor diretamente do repositório oficial.
 
-# Instalar bibliotecas Python
-pip install flask groq flask-cors
+1. No terminal do Termux, execute o comando abaixo para baixar o arquivo:
+`wget https://raw.githubusercontent.com/Dev-Benicio/Groq-Acode-Plugin/refs/heads/main/groq_server.py -O groq_server.py`
 
-```
+2. Agora, edite o arquivo para colocar a sua API Key da Groq:
+nano groq_server.py
+
+3. Encontre a linha `API_KEY = "SUA_CHAVE_AQUI"` e cole a sua chave entre as aspas.
+
+4. Salve o arquivo pressionando `Ctrl + O`, depois `Enter`, e saia com `Ctrl + X`.
 
 ---
 
-3️⃣ Criar o Servidor Python
-
-Como o Termux é um ambiente protegido, vamos criar o script diretamente nele.
-
-1. No terminal, crie o arquivo:
-nano groq_server.py
-
-2. Copie o código abaixo e cole dentro do terminal (Pressione e segure na tela -> Paste):
-
-```
-import os
-from flask import Flask, request, jsonify
-from flask_cors import CORS
-from groq import Groq
-
-# --- SUAS CONFIGURAÇÕES ---
-# Lembre-se de manter as aspas na chave!
-API_KEY = "ADICIONE_SUA_CHAVE_AQUI!!" 
-
-app = Flask(__name__)
-CORS(app)
-
-client = Groq(api_key=API_KEY)
-
-@app.route('/completar', methods=['POST'])
-def completar():
-    data = request.json
-    codigo_antes = data.get('prefix', '')
-    codigo_depois = data.get('suffix', '')
-    linguagem = data.get('language', 'java')
-    
-    print(f"--- Processando pedido para {linguagem} ---")
-
-    # Prompt OTIMIZADO para evitar textos extras
-    system_prompt = f"""
-    You are a code completion AI for {linguagem}.
-    Output ONLY the code to complete the current cursor position.
-    DO NOT use markdown blocks (```).
-    DO NOT explain.
-    """
-
-    user_prompt = f"""
-    Context:
-    {codigo_antes[-1500:]} <CURSOR> {codigo_depois[:1000]}
-    
-    Fill the <CURSOR> spot.
-    """
-
-    try:
-        completion = client.chat.completions.create(
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt}
-            ],
-            # MODELO ATUALIZADO (O antigo foi desligado)
-            model="llama-3.3-70b-versatile", 
-            temperature=0.1,
-            max_tokens=128,
-            stop=["\n\n", "```"] 
-        )
-        
-        sugestao = completion.choices[0].message.content
-        # Remove crases de markdown se a IA teimar em colocar
-        sugestao = sugestao.replace("```java", "").replace("```", "")
-        
-        return jsonify({"suggestion": sugestao})
-
-    except Exception as e:
-        print(f"ERRO API: {e}")
-        return jsonify({"error": str(e)}), 500
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
-
-```
 
 3. Salve o arquivo pressionando `Ctrl + O`, depois `Enter`, e saia com `Ctrl + X`.
 
@@ -145,7 +71,7 @@ python groq_server.py
 
 Por padrão, o servidor roda em:
 
-http://127.0.0.1:5000
+`http://127.0.0.1:5000`
 
 ⚠️ O Termux deve permanecer aberto enquanto o Acode estiver utilizando o autocomplete.
 
@@ -179,7 +105,7 @@ Linguagem do projeto
 
 URL do servidor:
 
-http://127.0.0.1:5000
+`http://127.0.0.1:5000`
 
 
 
